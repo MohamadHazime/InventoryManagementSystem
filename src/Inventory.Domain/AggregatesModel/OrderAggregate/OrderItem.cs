@@ -1,4 +1,5 @@
-﻿using Inventory.Domain.Exceptions;
+﻿using Inventory.Domain.AggregatesModel.ItemAggregate;
+using Inventory.Domain.Exceptions;
 using Inventory.Domain.SeedWork;
 
 namespace Inventory.Domain.AggregatesModel.OrderAggregate;
@@ -6,6 +7,7 @@ namespace Inventory.Domain.AggregatesModel.OrderAggregate;
 public class OrderItem : Entity
 {
     public int ItemId { get; private set; }
+    public Item Item { get; private set; }
     public int Quantity { get; private set; }
     public double UnitPrice { get; private set; }
     public double TotalPrice { get; private set; }

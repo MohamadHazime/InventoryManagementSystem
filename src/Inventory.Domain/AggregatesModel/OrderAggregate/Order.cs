@@ -1,4 +1,5 @@
-﻿using Inventory.Domain.AggregatesModel.SupplierAggregate;
+﻿using Inventory.Domain.AggregatesModel.ReceiptAggregate;
+using Inventory.Domain.AggregatesModel.SupplierAggregate;
 using Inventory.Domain.Events;
 using Inventory.Domain.SeedWork;
 
@@ -8,6 +9,7 @@ public class Order : Entity, IAggregateRoot
 {
     public int SupplierId { get; private set; }
     public Supplier Supplier { get; }
+    public Receipt Receipt { get; }
     public DateTime PurchaseDate { get; private set; }
     public double TotalAmount { get; private set; }
     public OrderStatus Status { get; private set; }
@@ -15,10 +17,10 @@ public class Order : Entity, IAggregateRoot
 
     private readonly List<OrderItem> _orderItems;
 
-    public Order(int supplierId, DateTime purchaseDate)
+    public Order(int supplierId)
     {
         SupplierId = supplierId;
-        PurchaseDate = purchaseDate;
+        PurchaseDate = DateTime.UtcNow;
         Status = OrderStatus.Submitted;
         _orderItems = new();
 

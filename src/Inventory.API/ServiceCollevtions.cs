@@ -3,6 +3,7 @@ using Inventory.Application.Behaviors;
 using Inventory.Application.Validators;
 using Inventory.Domain.AggregatesModel.ItemAggregate;
 using Inventory.Domain.AggregatesModel.OrderAggregate;
+using Inventory.Domain.AggregatesModel.ReceiptAggregate;
 using Inventory.Domain.AggregatesModel.SupplierAggregate;
 using Inventory.Infrastructure;
 using Inventory.Infrastructure.Repositories;
@@ -18,6 +19,7 @@ public static class ServiceCollections
         builder.Services.AddTransient<ISupplierRepository, SupplierRepository>();
         builder.Services.AddTransient<IItemRepository, ItemRepository>();
         builder.Services.AddTransient<IOrderRepository, OrderRepository>();
+        builder.Services.AddTransient<IReceiptRepository, ReceiptRepository>();
     }
 
     public static void AddDatabase(this IHostApplicationBuilder builder)

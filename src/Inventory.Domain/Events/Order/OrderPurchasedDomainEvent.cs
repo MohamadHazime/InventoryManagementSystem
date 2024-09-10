@@ -9,7 +9,7 @@ public class OrderPurchasedDomainEvent : DomainEvent
     public DateTime PurchaseDate { get; private set; }
     public OrderStatus Status { get; private set; }
 
-    public OrderPurchasedDomainEvent(int supplierId, DateTime purchaseDate, OrderStatus status)
+    public OrderPurchasedDomainEvent(int supplierId, DateTime purchaseDate, OrderStatus status) : base()
     {
         SupplierId = supplierId;
         PurchaseDate = purchaseDate;

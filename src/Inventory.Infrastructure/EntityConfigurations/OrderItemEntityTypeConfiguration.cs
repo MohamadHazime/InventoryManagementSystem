@@ -4,15 +4,16 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Inventory.Infrastructure.EntityConfigurations;
 
-class OrderItemEntityTypeConfiguration : EntityTypeConfiguration<OrderItem>
+public class OrderItemEntityTypeConfiguration : EntityTypeConfiguration<OrderItem>
 {
     public new virtual void Configure(EntityTypeBuilder<OrderItem> orderItemConfiguration)
     {
-        orderItemConfiguration.Ignore(b => b.DomainEvents);
-
-        orderItemConfiguration.Property(o => o.Id)
-            .UseHiLo("orderitemseq");
+        base.Configure(orderItemConfiguration);
 
         orderItemConfiguration.Property<int>("OrderId");
+
+        orderItemConfiguration.HasOne(oi => oi.Item)
+                .WithMany()
+                .HasForeignKey(oi => oi.ItemId);
     }
 }

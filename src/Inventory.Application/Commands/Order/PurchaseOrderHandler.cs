@@ -31,7 +31,7 @@ public class PurchaseOrderHandler : IRequestHandler<PurchaseOrderCommand, bool>
             throw new SupplierNotExistsDomainException(request.SupplierId);
         }
 
-        Order order = new(request.SupplierId, DateTime.UtcNow);
+        Order order = new(request.SupplierId);
 
         foreach (var orderItem in request.Items)
         {
