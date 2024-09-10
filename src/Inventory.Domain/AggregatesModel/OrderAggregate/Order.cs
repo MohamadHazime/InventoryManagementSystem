@@ -22,7 +22,7 @@ public class Order : Entity, IAggregateRoot
         Status = OrderStatus.Submitted;
         _orderItems = new();
 
-        AddOrderPurchasedDomainEvent(supplierId, purchaseDate, Status);
+        AddOrderPurchasedDomainEvent();
     }
 
     public void AddOrderItem(int itemId, int quantity, double unitPrice)
@@ -48,10 +48,30 @@ public class Order : Entity, IAggregateRoot
         }
     }
 
-    private void AddOrderPurchasedDomainEvent(int supplierId, DateTime purchaseDate, OrderStatus status)
+    public void UpdateOrderStatus(bool isCompleted)
     {
-        OrderPurchasedDomainEvent orderPurchasedDomainEvent = new(supplierId, purchaseDate, status);
+        Status = isCompleted ? OrderStatus.Completed : OrderStatus.Cancelled;
+
+        AddOrderStatusUpdatedDomainEvent();
+    }
+
+    public bool IsFinalStatus()
+    {
+        return Status == OrderStatus.Completed || Status == OrderStatus.Cancelled;
+    }
+
+    private void AddOrderPurchasedDomainEvent()
+    {
+        OrderPurchasedDomainEvent orderPurchasedDomainEvent = new(SupplierId, PurchaseDate, Status);
 
         this.AddDomainEvent(orderPurchasedDomainEvent);
     }
+
+    private void AddOrderStatusUpdatedDomainEvent()
+    {
+        OrderStatusUpdatedDomainEvent orderStatusUpdatedDomainEvent = new(Id, Status);
+
+        this.AddDomainEvent(orderStatusUpdatedDomainEvent);
+    }
 }
+ 

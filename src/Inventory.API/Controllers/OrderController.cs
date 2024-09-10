@@ -25,4 +25,11 @@ public class OrderController : ControllerBase
         var result = await _mediator.Send(command);
         return new ResponseBase<bool>(result, true);
     }
+
+    [HttpPost("UpdateStatus")]
+    public async Task<ResponseBase<bool>> UpdateStatus(UpdateOrderStatusCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return new ResponseBase<bool>(result, true);
+    }
 }

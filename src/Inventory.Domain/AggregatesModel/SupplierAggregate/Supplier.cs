@@ -17,7 +17,7 @@ public class Supplier : Entity, IAggregateRoot
         Email = email;
         PhoneNumber = phoneNumber;
 
-        AddSupplierCreatedDomainEvent(firstName, lastName, email, phoneNumber);
+        AddSupplierCreatedDomainEvent();
     }
 
     public void UpdateSupplier(string firstName, string lastName, string phoneNumber)
@@ -26,19 +26,19 @@ public class Supplier : Entity, IAggregateRoot
         LastName = lastName;
         PhoneNumber = phoneNumber;
 
-        AddSupplierUpdatedDomainEvent(firstName, lastName, phoneNumber);
+        AddSupplierUpdatedDomainEvent();
     }
 
-    private void AddSupplierCreatedDomainEvent(string firstName, string lastName, string email, string phoneNumber)
+    private void AddSupplierCreatedDomainEvent()
     {
-        SupplierCreatedDomainEvent supplierCreatedDomainEvent = new(firstName, lastName, email, phoneNumber);
+        SupplierCreatedDomainEvent supplierCreatedDomainEvent = new(FirstName, LastName, Email, PhoneNumber);
 
         AddDomainEvent(supplierCreatedDomainEvent);
     }
 
-    private void AddSupplierUpdatedDomainEvent(string firstName, string lastName, string phoneNumber)
+    private void AddSupplierUpdatedDomainEvent()
     {
-        SupplierUpdatedDomainEvent supplierUpdatedDomainEvent = new(firstName, lastName, phoneNumber);
+        SupplierUpdatedDomainEvent supplierUpdatedDomainEvent = new(Id, FirstName, LastName, PhoneNumber);
 
         AddDomainEvent(supplierUpdatedDomainEvent);
     }

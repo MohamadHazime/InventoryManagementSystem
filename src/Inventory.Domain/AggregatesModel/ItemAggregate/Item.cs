@@ -28,7 +28,7 @@ public class Item : Entity, IAggregateRoot
 
     private void AddItemQuantityUpdatedDomainEvent(int quantity)
     {
-        ItemQuantityUpdatedDomainEvent itemQuantityUpdatedDomainEvent = new(quantity);
+        ItemQuantityUpdatedDomainEvent itemQuantityUpdatedDomainEvent = new(Id, quantity);
 
         AddDomainEvent(itemQuantityUpdatedDomainEvent);
     }
