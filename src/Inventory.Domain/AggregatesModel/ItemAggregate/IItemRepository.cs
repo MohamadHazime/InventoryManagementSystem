@@ -2,8 +2,6 @@
 
 namespace Inventory.Domain.AggregatesModel.ItemAggregate;
 
-public interface IItemRepository : IRepository<Item>
+public interface IItemRepository : IEntityRepository<Item>, IRepository<Item>
 {
-    Task<Item> GetAsync(int itemId);
-    void Update(Item item);
 }
