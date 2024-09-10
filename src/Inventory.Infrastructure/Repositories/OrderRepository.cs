@@ -21,7 +21,14 @@ public class OrderRepository : IOrderRepository
 
     public async Task<Order> GetAsync(int orderId)
     {
-        return await _context.Orders.FindAsync(orderId);
+        Order order = await _context.Orders.FindAsync(orderId);
+
+        if (order != null)
+        {
+            await _context.Entry(order).Collection(o => o.OrderItems).LoadAsync();
+        }
+
+        return order;
     }
 
     public void Update(Order order)

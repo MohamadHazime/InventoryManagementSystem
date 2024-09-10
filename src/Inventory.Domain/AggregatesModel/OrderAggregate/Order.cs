@@ -11,20 +11,46 @@ public class Order : Entity, IAggregateRoot
     public DateTime PurchaseDate { get; private set; }
     public double TotalAmount { get; private set; }
     public OrderStatus Status { get; private set; }
+    public IReadOnlyCollection<OrderItem> OrderItems => _orderItems.AsReadOnly();
 
-    public Order(int supplierId, DateTime purchaseDate, double totalAmount, OrderStatus status)
+    private readonly List<OrderItem> _orderItems;
+
+    public Order(int supplierId, DateTime purchaseDate)
     {
         SupplierId = supplierId;
         PurchaseDate = purchaseDate;
-        TotalAmount = totalAmount;
-        Status = status;
+        Status = OrderStatus.Submitted;
+        _orderItems = new();
 
-        AddOrderPurchasedDomainEvent(supplierId, purchaseDate, totalAmount, status);
+        AddOrderPurchasedDomainEvent(supplierId, purchaseDate, Status);
     }
 
-    private void AddOrderPurchasedDomainEvent(int supplierId, DateTime purchaseDate, double totalAmount, OrderStatus status)
+    public void AddOrderItem(int itemId, int quantity, double unitPrice)
     {
-        OrderPurchasedDomainEvent orderPurchasedDomainEvent = new(supplierId, purchaseDate, totalAmount, status);
+        var existingItemInOrder = _orderItems.SingleOrDefault(o => o.ItemId == itemId);
+
+        if (existingItemInOrder != null)
+        {
+            existingItemInOrder.IncreaseQuantity(quantity);
+        }
+        else
+        {
+            var orderItem = new OrderItem(itemId, quantity, unitPrice);
+            _orderItems.Add(orderItem);
+        }
+    }
+
+    public void CalculateTotalAmount()
+    {
+        foreach(OrderItem orderItem in _orderItems)
+        {
+            TotalAmount += orderItem.TotalPrice;
+        }
+    }
+
+    private void AddOrderPurchasedDomainEvent(int supplierId, DateTime purchaseDate, OrderStatus status)
+    {
+        OrderPurchasedDomainEvent orderPurchasedDomainEvent = new(supplierId, purchaseDate, status);
 
         this.AddDomainEvent(orderPurchasedDomainEvent);
     }

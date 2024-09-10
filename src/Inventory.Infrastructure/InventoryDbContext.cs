@@ -13,6 +13,7 @@ public class InventoryDbContext : DbContext, IUnitOfWork
     public DbSet<Supplier> Suppliers { get; set; }
     public DbSet<Item> Items { get; set; }
     public DbSet<Order> Orders { get; set; }
+    public DbSet<OrderItem> OrderItems { get; set; }
 
     private readonly IMediator _mediator;
 
@@ -53,5 +54,6 @@ public class InventoryDbContext : DbContext, IUnitOfWork
         modelBuilder.ApplyConfiguration(new SupplierEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new ItemEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new OrderEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new OrderItemEntityTypeConfiguration());
     }
 }
