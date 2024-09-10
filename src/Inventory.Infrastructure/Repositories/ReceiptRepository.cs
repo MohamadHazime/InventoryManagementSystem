@@ -1,5 +1,4 @@
-﻿using Inventory.Domain.AggregatesModel.OrderAggregate;
-using Inventory.Domain.AggregatesModel.ReceiptAggregate;
+﻿using Inventory.Domain.AggregatesModel.ReceiptAggregate;
 using Inventory.Domain.SeedWork;
 using Microsoft.EntityFrameworkCore;
 

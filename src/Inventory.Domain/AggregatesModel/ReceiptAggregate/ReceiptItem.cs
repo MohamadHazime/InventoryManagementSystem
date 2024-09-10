@@ -30,7 +30,7 @@ public class ReceiptItem : Entity
 
         QuantityReceived += quantityReceived;
 
-        if(QuantityReceived > quantity)
+        if (QuantityReceived > quantity)
         {
             throw new InvalidReceiptItemQuantityReceivedException();
         }

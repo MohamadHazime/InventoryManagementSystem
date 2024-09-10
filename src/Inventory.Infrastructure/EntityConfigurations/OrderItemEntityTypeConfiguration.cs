@@ -1,5 +1,4 @@
 ﻿using Inventory.Domain.AggregatesModel.OrderAggregate;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Inventory.Infrastructure.EntityConfigurations;

@@ -10,11 +10,11 @@ public static class ReceiptExtensions
     {
         List<ReceiptItemDto> items = new();
 
-        foreach(ReceiptItem receiptItem in receipt.ReceiptItems)
+        foreach (ReceiptItem receiptItem in receipt.ReceiptItems)
         {
             OrderItem orderItem = order.OrderItems.FirstOrDefault(oi => oi.ItemId == receiptItem.ItemId);
 
-            if(orderItem != null)
+            if (orderItem != null)
             {
                 items.Add(new ReceiptItemDto(receiptItem.ItemId, orderItem.Quantity, receiptItem.QuantityReceived));
             }

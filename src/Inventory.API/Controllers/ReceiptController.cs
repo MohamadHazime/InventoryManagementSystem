@@ -1,7 +1,6 @@
 ﻿using Inventory.Application.Commands;
 using Inventory.Application.DTOs;
 using Inventory.Application.Queries;
-using Inventory.Domain.AggregatesModel.ReceiptAggregate;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

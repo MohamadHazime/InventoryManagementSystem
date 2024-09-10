@@ -31,14 +31,14 @@ public class CreateReceiptHandler : IRequestHandler<CreateReceiptCommand, bool>
             throw new OrderNotExistsException(request.OrderId);
         }
 
-        if(!order.IsCompleted())
+        if (!order.IsCompleted())
         {
             throw new CreateReceiptNotAllowedException();
         }
 
         Receipt receipt = await _receiptRepository.GetByOrderIdAsync(request.OrderId);
 
-        if(receipt != null)
+        if (receipt != null)
         {
             throw new ReceiptForOrderExistsException(request.OrderId);
         }

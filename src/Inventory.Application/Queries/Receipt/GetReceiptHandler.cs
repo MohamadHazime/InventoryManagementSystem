@@ -21,7 +21,7 @@ public class GetReceiptHandler : IRequestHandler<GetReceiptQuery, ReceiptDto>
     {
         Receipt receipt = await _receiptRepository.GetAsync(request.ReceiptId);
 
-        if(receipt == null) return null;
+        if (receipt == null) return null;
 
         Order order = await _orderRepository.GetAsync(receipt.OrderId);
 

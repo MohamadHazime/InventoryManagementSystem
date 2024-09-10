@@ -18,7 +18,7 @@ public class ReceiptCreatedDomainEventHandler : INotificationHandler<ReceiptCrea
 
     public async Task Handle(ReceiptCreatedDomainEvent notification, CancellationToken cancellationToken)
     {
-        foreach(ReceiptItem receiptItem in notification.ReceiptItems)
+        foreach (ReceiptItem receiptItem in notification.ReceiptItems)
         {
             Item item = await _itemsRepository.GetAsync(receiptItem.ItemId);
 

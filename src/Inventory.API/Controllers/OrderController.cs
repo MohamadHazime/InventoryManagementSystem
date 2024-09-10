@@ -1,6 +1,5 @@
 ﻿using Inventory.Application.Commands;
 using Inventory.Application.DTOs;
-using Inventory.Domain.AggregatesModel.OrderAggregate;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

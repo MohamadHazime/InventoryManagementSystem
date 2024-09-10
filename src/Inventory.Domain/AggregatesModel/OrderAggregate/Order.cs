@@ -42,7 +42,7 @@ public class Order : Entity, IAggregateRoot
 
     public void CalculateTotalAmount()
     {
-        foreach(OrderItem orderItem in _orderItems)
+        foreach (OrderItem orderItem in _orderItems)
         {
             TotalAmount += orderItem.TotalPrice;
         }
@@ -81,4 +81,3 @@ public class Order : Entity, IAggregateRoot
         this.AddDomainEvent(orderStatusUpdatedDomainEvent);
     }
 }
- 
