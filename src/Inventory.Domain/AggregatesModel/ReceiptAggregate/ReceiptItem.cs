@@ -28,7 +28,7 @@ public class ReceiptItem : Entity
             throw new InvalidReceiptItemQuantityException();
         }
 
-        QuantityReceived += quantity;
+        QuantityReceived += quantityReceived;
 
         if(QuantityReceived > quantity)
         {

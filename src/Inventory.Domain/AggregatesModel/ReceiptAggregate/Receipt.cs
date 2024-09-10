@@ -18,8 +18,6 @@ public class Receipt : Entity, IAggregateRoot
     {
         OrderId = orderId;
         _receiptItems = new();
-
-        AddReceiptCreatedDomainEvent();
     }
 
     public void AddReceiptItem(int itemId, int quantityReceived, int quantity)
@@ -42,9 +40,14 @@ public class Receipt : Entity, IAggregateRoot
         }
     }
 
+    public void ConfirmReceipt()
+    {
+        AddReceiptCreatedDomainEvent();
+    }
+
     private void AddReceiptCreatedDomainEvent()
     {
-        ReceiptCreatedDomainEvent receiptCreatedDomainEvent = new(OrderId, CreatedDate);
+        ReceiptCreatedDomainEvent receiptCreatedDomainEvent = new(OrderId, CreatedDate, ReceiptItems);
 
         AddDomainEvent(receiptCreatedDomainEvent);
     }

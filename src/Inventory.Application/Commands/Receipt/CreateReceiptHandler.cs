@@ -64,6 +64,8 @@ public class CreateReceiptHandler : IRequestHandler<CreateReceiptCommand, bool>
             receipt.AddReceiptItem(item.Id, reciptItem.QuantityReceived, orderItem.Quantity);
         }
 
+        receipt.ConfirmReceipt();
+
         _receiptRepository.Add(receipt);
 
         await _receiptRepository.UnitOfWork.SaveEntitiesAsync();

@@ -23,8 +23,6 @@ public class Order : Entity, IAggregateRoot
         PurchaseDate = DateTime.UtcNow;
         Status = OrderStatus.Submitted;
         _orderItems = new();
-
-        AddOrderPurchasedDomainEvent();
     }
 
     public void AddOrderItem(int itemId, int quantity, double unitPrice)
@@ -48,6 +46,8 @@ public class Order : Entity, IAggregateRoot
         {
             TotalAmount += orderItem.TotalPrice;
         }
+
+        AddOrderPurchasedDomainEvent();
     }
 
     public void UpdateOrderStatus(bool isCompleted)
@@ -69,7 +69,7 @@ public class Order : Entity, IAggregateRoot
 
     private void AddOrderPurchasedDomainEvent()
     {
-        OrderPurchasedDomainEvent orderPurchasedDomainEvent = new(SupplierId, PurchaseDate, Status);
+        OrderPurchasedDomainEvent orderPurchasedDomainEvent = new(SupplierId, PurchaseDate, Status, OrderItems);
 
         this.AddDomainEvent(orderPurchasedDomainEvent);
     }
