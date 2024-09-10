@@ -11,12 +11,10 @@ namespace Inventory.API.Controllers;
 public class OrderController : ControllerBase
 {
     private readonly IMediator _mediator;
-    private readonly IOrderRepository _orderRepo;
 
-    public OrderController(IMediator mediator, IOrderRepository orderRepo)
+    public OrderController(IMediator mediator)
     {
         _mediator = mediator;
-        _orderRepo = orderRepo;
     }
 
     [HttpPost("PurchaseOrder")]

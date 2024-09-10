@@ -20,4 +20,19 @@ public class ReceiptItem : Entity
         ItemId = itemId;
         QuantityReceived = quantityReceived;
     }
+
+    public void IncreaseQuantityReceived(int quantityReceived, int quantity)
+    {
+        if (quantityReceived < 0)
+        {
+            throw new InvalidReceiptItemQuantityException();
+        }
+
+        QuantityReceived += quantity;
+
+        if(QuantityReceived > quantity)
+        {
+            throw new InvalidReceiptItemQuantityReceivedException();
+        }
+    }
 }

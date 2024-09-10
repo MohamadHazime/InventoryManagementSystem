@@ -39,7 +39,7 @@ public class PurchaseOrderHandler : IRequestHandler<PurchaseOrderCommand, bool>
 
             if (item == null)
             {
-                throw new ItemNotExistsDomainException(request.SupplierId);
+                throw new ItemNotExistsDomainException(orderItem.Id);
             }
 
             order.AddOrderItem(item.Id, orderItem.Quantity, item.Price);

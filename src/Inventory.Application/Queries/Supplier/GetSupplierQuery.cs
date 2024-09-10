@@ -5,10 +5,10 @@ namespace Inventory.Application.Queries;
 
 public class GetSupplierQuery : IRequest<SupplierDto>
 {
-    public int Id { get; private set; }
+    public int SupplierId { get; private set; }
 
-    public GetSupplierQuery(int id)
+    public GetSupplierQuery(int supplierId)
     {
-        Id = id;
+        SupplierId = supplierId;
     }
 }

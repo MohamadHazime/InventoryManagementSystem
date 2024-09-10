@@ -62,6 +62,11 @@ public class Order : Entity, IAggregateRoot
         return Status == OrderStatus.Completed || Status == OrderStatus.Cancelled;
     }
 
+    public bool IsCompleted()
+    {
+        return Status == OrderStatus.Completed;
+    }
+
     private void AddOrderPurchasedDomainEvent()
     {
         OrderPurchasedDomainEvent orderPurchasedDomainEvent = new(SupplierId, PurchaseDate, Status);

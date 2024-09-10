@@ -3,10 +3,10 @@ using Inventory.Application.Queries;
 
 namespace Inventory.Application.Validators;
 
-public class GetSupplierValidator : AbstractValidator<GetSupplierQuery>
+public class GetReceiptValidator : AbstractValidator<GetReceiptQuery>
 {
-    public GetSupplierValidator()
+    public GetReceiptValidator()
     {
-        RuleFor(request => request.Id).NotEmpty();
+        RuleFor(request => request.ReceiptId).NotEmpty();
     }
 }

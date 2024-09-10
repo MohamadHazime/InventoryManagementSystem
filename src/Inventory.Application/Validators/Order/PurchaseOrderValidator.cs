@@ -18,7 +18,7 @@ public class ItemDtoValidator : AbstractValidator<ItemDto>
 {
     public ItemDtoValidator()
     {
-        RuleFor(item => item.Id);
+        RuleFor(item => item.Id).NotEmpty();
         RuleFor(item => item.Quantity).GreaterThan(0);
     }
 }

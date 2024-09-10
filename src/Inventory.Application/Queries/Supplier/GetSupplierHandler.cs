@@ -16,7 +16,7 @@ public class GetSupplierHandler : IRequestHandler<GetSupplierQuery, SupplierDto>
 
     public async Task<SupplierDto> Handle(GetSupplierQuery request, CancellationToken cancellationToken)
     {
-        Supplier supplier = await _supplierRepository.GetAsync(request.Id);
+        Supplier supplier = await _supplierRepository.GetAsync(request.SupplierId);
         return supplier.ToDto();
     }
 }

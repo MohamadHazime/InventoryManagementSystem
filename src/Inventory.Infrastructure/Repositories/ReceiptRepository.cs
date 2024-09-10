@@ -1,5 +1,7 @@
-﻿using Inventory.Domain.AggregatesModel.ReceiptAggregate;
+﻿using Inventory.Domain.AggregatesModel.OrderAggregate;
+using Inventory.Domain.AggregatesModel.ReceiptAggregate;
 using Inventory.Domain.SeedWork;
+using Microsoft.EntityFrameworkCore;
 
 namespace Inventory.Infrastructure.Repositories;
 
@@ -48,5 +50,17 @@ public class ReceiptRepository : IReceiptRepository
         }
 
         return false;
+    }
+
+    public async Task<Receipt> GetByOrderIdAsync(int orderId)
+    {
+        Receipt receipt = await _context.Receipts.FirstOrDefaultAsync(r => r.OrderId == orderId);
+
+        if (receipt != null)
+        {
+            await _context.Entry(receipt).Collection(o => o.ReceiptItems).LoadAsync();
+        }
+
+        return receipt;
     }
 }
