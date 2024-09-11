@@ -1,28 +1,34 @@
-﻿using Inventory.Domain.AggregatesModel.ItemAggregate;
+﻿using Inventory.Application.DTOs;
+using Inventory.Application.Extensions;
+using Inventory.Domain.AggregatesModel.ItemAggregate;
 using Inventory.Domain.AggregatesModel.OrderAggregate;
 using Inventory.Domain.AggregatesModel.ReceiptAggregate;
 using Inventory.Domain.Exceptions;
+using Inventory.Domain.Notifications;
 using MediatR;
 
 namespace Inventory.Application.Commands;
 
-public class CreateReceiptHandler : IRequestHandler<CreateReceiptCommand, bool>
+public class CreateReceiptHandler : IRequestHandler<CreateReceiptCommand, ReceiptDto>
 {
     private readonly IReceiptRepository _receiptRepository;
     private readonly IOrderRepository _orderRepository;
     private readonly IItemRepository _itemRepository;
+    private readonly IMediator _mediator;
 
     public CreateReceiptHandler(
         IReceiptRepository receiptRepository,
         IOrderRepository orderRepository,
-        IItemRepository itemRepository)
+        IItemRepository itemRepository,
+        IMediator mediator)
     {
         _receiptRepository = receiptRepository;
         _orderRepository = orderRepository;
         _itemRepository = itemRepository;
+        _mediator = mediator;
     }
 
-    public async Task<bool> Handle(CreateReceiptCommand request, CancellationToken cancellationToken)
+    public async Task<ReceiptDto> Handle(CreateReceiptCommand request, CancellationToken cancellationToken)
     {
         Order order = await _orderRepository.GetAsync(request.OrderId);
 
@@ -66,10 +72,12 @@ public class CreateReceiptHandler : IRequestHandler<CreateReceiptCommand, bool>
 
         receipt.ConfirmReceipt();
 
-        _receiptRepository.Add(receipt);
+        Receipt addedReceipt = _receiptRepository.Add(receipt);
+
+        await _mediator.Publish(new ReceiptCreatedNotification(addedReceipt.Id));
 
         await _receiptRepository.UnitOfWork.SaveEntitiesAsync();
 
-        return true;
+        return receipt.ToDto(order);
     }
 }

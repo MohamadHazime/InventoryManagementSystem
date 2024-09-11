@@ -1,6 +1,7 @@
 ﻿using Inventory.Application.DTOs;
 using Inventory.Application.Extensions;
 using Inventory.Domain.AggregatesModel.SupplierAggregate;
+using Inventory.Domain.Exceptions;
 using MediatR;
 
 namespace Inventory.Application.Queries;
@@ -17,6 +18,12 @@ public class GetSupplierHandler : IRequestHandler<GetSupplierQuery, SupplierDto>
     public async Task<SupplierDto> Handle(GetSupplierQuery request, CancellationToken cancellationToken)
     {
         Supplier supplier = await _supplierRepository.GetAsync(request.SupplierId);
+
+        if(supplier == null)
+        {
+            throw new SupplierNotExistsDomainException(request.SupplierId);
+        }
+
         return supplier.ToDto();
     }
 }

@@ -21,6 +21,4 @@ public static class MediatorExtension
         foreach (var domainEvent in domainEvents)
             await mediator.Publish(domainEvent);
     }
-
-    public static void Test(this IMediator mediator) { }
 }

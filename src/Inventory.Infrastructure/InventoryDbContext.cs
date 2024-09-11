@@ -1,4 +1,5 @@
 ﻿using Inventory.Domain.AggregatesModel.ItemAggregate;
+using Inventory.Domain.AggregatesModel.ItemLedgerAggregate;
 using Inventory.Domain.AggregatesModel.OrderAggregate;
 using Inventory.Domain.AggregatesModel.ReceiptAggregate;
 using Inventory.Domain.AggregatesModel.SupplierAggregate;
@@ -17,6 +18,7 @@ public class InventoryDbContext : DbContext, IUnitOfWork
     public DbSet<OrderItem> OrderItems { get; set; }
     public DbSet<Receipt> Receipts { get; set; }
     public DbSet<ReceiptItem> ReceiptItems { get; set; }
+    public DbSet<ItemLedger> ItemLedgers { get; set; }
 
     private readonly IMediator _mediator;
 
@@ -60,5 +62,6 @@ public class InventoryDbContext : DbContext, IUnitOfWork
         modelBuilder.ApplyConfiguration(new OrderItemEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new ReceiptEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new ReceiptItemEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new ItemLedgerEntityTypeConfiguration());
     }
 }

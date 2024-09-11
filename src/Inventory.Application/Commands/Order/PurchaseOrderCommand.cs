@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Inventory.Application.Commands;
 
-public class PurchaseOrderCommand : IRequest<bool>
+public class PurchaseOrderCommand : IRequest<OrderDto>
 {
     public int SupplierId { get; private set; }
     public IEnumerable<ItemDto> Items { get; private set; }

@@ -17,6 +17,7 @@ public class Receipt : Entity, IAggregateRoot
     public Receipt(int orderId)
     {
         OrderId = orderId;
+        CreatedDate = DateTime.UtcNow;
         _receiptItems = new();
     }
 

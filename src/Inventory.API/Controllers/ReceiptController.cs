@@ -25,9 +25,9 @@ public class ReceiptController : ControllerBase
     }
 
     [HttpPost("Create")]
-    public async Task<ResponseBase<bool>> Create(CreateReceiptCommand command)
+    public async Task<ResponseBase<ReceiptDto>> Create(CreateReceiptCommand command)
     {
-        var result = await _mediator.Send(command);
-        return new ResponseBase<bool>(result, true);
+        ReceiptDto receipt = await _mediator.Send(command);
+        return new ResponseBase<ReceiptDto>(receipt, true);
     }
 }

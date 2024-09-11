@@ -17,10 +17,10 @@ public class OrderController : ControllerBase
     }
 
     [HttpPost("PurchaseOrder")]
-    public async Task<ResponseBase<bool>> PurchaseOrder(PurchaseOrderCommand command)
+    public async Task<ResponseBase<OrderDto>> PurchaseOrder(PurchaseOrderCommand command)
     {
-        var result = await _mediator.Send(command);
-        return new ResponseBase<bool>(result, true);
+        OrderDto order = await _mediator.Send(command);
+        return new ResponseBase<OrderDto>(order, true);
     }
 
     [HttpPost("UpdateStatus")]

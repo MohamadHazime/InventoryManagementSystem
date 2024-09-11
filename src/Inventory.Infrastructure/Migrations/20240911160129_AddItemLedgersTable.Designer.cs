@@ -4,6 +4,7 @@ using Inventory.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Inventory.Infrastructure.Migrations
 {
     [DbContext(typeof(InventoryDbContext))]
-    partial class InventoryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240911160129_AddItemLedgersTable")]
+    partial class AddItemLedgersTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -117,8 +120,6 @@ namespace Inventory.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ItemId");
-
                     b.ToTable("ItemLedgers");
                 });
 
@@ -172,8 +173,6 @@ namespace Inventory.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ItemId");
-
                     b.HasIndex("OrderId");
 
                     b.ToTable("OrderItems");
@@ -217,8 +216,6 @@ namespace Inventory.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ItemId");
-
                     b.HasIndex("ReceiptId");
 
                     b.ToTable("ReceiptItems");
@@ -249,45 +246,18 @@ namespace Inventory.Infrastructure.Migrations
                     b.ToTable("Suppliers");
                 });
 
-            modelBuilder.Entity("Inventory.Domain.AggregatesModel.ItemLedgerAggregate.ItemLedger", b =>
-                {
-                    b.HasOne("Inventory.Domain.AggregatesModel.ItemAggregate.Item", "Item")
-                        .WithMany()
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Item");
-                });
-
             modelBuilder.Entity("Inventory.Domain.AggregatesModel.OrderAggregate.OrderItem", b =>
                 {
-                    b.HasOne("Inventory.Domain.AggregatesModel.ItemAggregate.Item", "Item")
-                        .WithMany()
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Inventory.Domain.AggregatesModel.OrderAggregate.Order", null)
                         .WithMany("OrderItems")
                         .HasForeignKey("OrderId");
-
-                    b.Navigation("Item");
                 });
 
             modelBuilder.Entity("Inventory.Domain.AggregatesModel.ReceiptAggregate.ReceiptItem", b =>
                 {
-                    b.HasOne("Inventory.Domain.AggregatesModel.ItemAggregate.Item", "Item")
-                        .WithMany()
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Inventory.Domain.AggregatesModel.ReceiptAggregate.Receipt", null)
                         .WithMany("ReceiptItems")
                         .HasForeignKey("ReceiptId");
-
-                    b.Navigation("Item");
                 });
 
             modelBuilder.Entity("Inventory.Domain.AggregatesModel.OrderAggregate.Order", b =>

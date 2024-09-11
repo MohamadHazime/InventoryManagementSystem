@@ -1,4 +1,6 @@
-﻿using Inventory.Domain.AggregatesModel.ItemAggregate;
+﻿using Inventory.Application.DTOs;
+using Inventory.Application.Extensions;
+using Inventory.Domain.AggregatesModel.ItemAggregate;
 using Inventory.Domain.AggregatesModel.OrderAggregate;
 using Inventory.Domain.AggregatesModel.SupplierAggregate;
 using Inventory.Domain.Exceptions;
@@ -6,7 +8,7 @@ using MediatR;
 
 namespace Inventory.Application.Commands;
 
-public class PurchaseOrderHandler : IRequestHandler<PurchaseOrderCommand, bool>
+public class PurchaseOrderHandler : IRequestHandler<PurchaseOrderCommand, OrderDto>
 {
     private readonly IOrderRepository _orderRepository;
     private readonly IItemRepository _itemRepository;
@@ -22,7 +24,7 @@ public class PurchaseOrderHandler : IRequestHandler<PurchaseOrderCommand, bool>
         _supplierRepository = supplierRepository;
     }
 
-    public async Task<bool> Handle(PurchaseOrderCommand request, CancellationToken cancellationToken)
+    public async Task<OrderDto> Handle(PurchaseOrderCommand request, CancellationToken cancellationToken)
     {
         Supplier supplier = await _supplierRepository.GetAsync(request.SupplierId);
 
@@ -51,6 +53,6 @@ public class PurchaseOrderHandler : IRequestHandler<PurchaseOrderCommand, bool>
 
         await _orderRepository.UnitOfWork.SaveEntitiesAsync();
 
-        return true;
+        return order.ToDto();
     }
 }

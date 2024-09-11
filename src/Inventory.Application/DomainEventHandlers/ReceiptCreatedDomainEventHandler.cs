@@ -7,12 +7,10 @@ namespace Inventory.Application.DomainEventHandlers;
 
 public class ReceiptCreatedDomainEventHandler : INotificationHandler<ReceiptCreatedDomainEvent>
 {
-    private readonly IReceiptRepository _receiptRepository;
     private readonly IItemRepository _itemsRepository;
 
-    public ReceiptCreatedDomainEventHandler(IReceiptRepository receiptRepository, IItemRepository itemsRepository)
+    public ReceiptCreatedDomainEventHandler(IItemRepository itemsRepository)
     {
-        _receiptRepository = receiptRepository;
         _itemsRepository = itemsRepository;
     }
 
