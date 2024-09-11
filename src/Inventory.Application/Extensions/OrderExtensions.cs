@@ -11,7 +11,7 @@ public static class OrderExtensions
 
         foreach(OrderItem orderItem in order.OrderItems)
         {
-            items.Add(new OrderItemDto(orderItem.Id, orderItem.Quantity, orderItem.UnitPrice));
+            items.Add(new OrderItemDto(orderItem.ItemId, orderItem.Quantity, orderItem.UnitPrice));
         }
 
         return new OrderDto(order.Id, items, order.TotalAmount);
