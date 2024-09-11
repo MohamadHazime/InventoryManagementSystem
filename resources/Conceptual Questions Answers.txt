@@ -1,0 +1,35 @@
+1- Project Architecture:
+I chose Domain Driven Design(DDD) to handle the complexity of the domain logic and to ensure a clean separation of concerns, flexibility for future scaling, 
+and resilience to change. This architecture makes the project more maintainable, understandable, and scalable in the long term. I also used the CQRS pattern 
+to separate read and write operations in the system.
+
+The project is decomposed of 4 layers:
+	- Inventory.Domain: containing entities, exceptions definition, repositories definition, domain events...
+	- Inventory.Infrastructure: containing dbcontext, repositories implementation, entities configuration...
+	- Inventory.Application: containing commands, commands handler, queries, queries handler, DTOs, validators, domain events handler...
+	- Inventory.API: containing the controllers, dependency injection, global exceptions handling...
+
+
+2- Database Design:
+To check the database design, please refer to "ER Diagram.png".
+The relationships between the tables are:
+	- One supplier can have many orders (Supplier <-> Orders)
+	- One order can have many order items (Orders <-> OrderItems)
+	- One item can have multiple order item records (Items <-> OrderItems)
+	- One receipt can have many received items (Receipts <-> ReceiptItems)
+	- One item can have multiple receipt item records (Items <-> ReceiptItems)
+	- One receipt can have only one order (Receipts <-> Orders)
+	- One item can have many item ledger records (Items <-> ItemLedgers)
+About indexing, I am using primay key indexing that is clustered indexing to perform fast operations base on physical order of data, and foreign key 
+indexing that is a non-unique and non-clustered indexing to optimize queries that contains joining between tables.
+
+3- Concurrency Control:
+To handle concurrency control, I used Optimistic Concurrency Control(OCC) concept base on RowVersion column. The user that has an old RowVersion when trying to 
+update the record will face an exception.
+
+4- Inventory Synchronization:
+To update the inventory when a receipt is created, I used the domain events that is an internal events in the system.
+MediatR package give the ability to handler these events.
+
+5- Error Handling:
+To handle errors and failures in the system, I added a global exception handler.

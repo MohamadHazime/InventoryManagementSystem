@@ -8,7 +8,7 @@ namespace Inventory.Domain.AggregatesModel.OrderAggregate;
 public class Order : Entity, IAggregateRoot
 {
     public int SupplierId { get; private set; }
-    public Supplier Supplier { get; }
+    public Supplier Supplier { get; private set; }
     public Receipt Receipt { get; }
     public DateTime PurchaseDate { get; private set; }
     public double TotalAmount { get; private set; }

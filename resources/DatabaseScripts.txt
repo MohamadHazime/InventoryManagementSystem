@@ -1,0 +1,68 @@
+CREATE TABLE Suppliers (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    FirstName NVARCHAR(MAX),
+    LastName NVARCHAR(MAX),
+    Email NVARCHAR(MAX),
+    PhoneNumber NVARCHAR(MAX),
+    RowVersion TIMESTAMP
+);
+
+CREATE TABLE Items (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Name NVARCHAR(MAX),
+    Description NVARCHAR(MAX),
+    Price FLOAT NOT NULL,
+    Quantity INT NOT NULL,
+    RowVersion TIMESTAMP
+);
+
+CREATE TABLE Orders (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    SupplierId INT NOT NULL,
+    PurchaseDate DATETIME2(7) NOT NULL,
+    TotalAmount FLOAT NOT NULL,
+    Status INT NOT NULL,
+    RowVersion TIMESTAMP,
+    CONSTRAINT FK_Orders_Suppliers FOREIGN KEY (SupplierId) REFERENCES Suppliers(Id)
+);
+
+CREATE TABLE OrderItems (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    ItemId INT NOT NULL,
+    Quantity INT NOT NULL,
+    UnitPrice FLOAT NOT NULL,
+    TotalPrice FLOAT NOT NULL,
+    OrderId INT NOT NULL,
+    RowVersion TIMESTAMP,
+    CONSTRAINT FK_OrderItems_Items FOREIGN KEY (ItemId) REFERENCES Items(Id),
+    CONSTRAINT FK_OrderItems_Orders FOREIGN KEY (OrderId) REFERENCES Orders(Id)
+);
+
+CREATE TABLE Receipts (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    OrderId INT NOT NULL,
+    CreatedDate DATETIME2(7) NOT NULL,
+    RowVersion TIMESTAMP,
+    CONSTRAINT FK_Receipts_Orders FOREIGN KEY (OrderId) REFERENCES Orders(Id)
+);
+
+CREATE TABLE ReceiptItems (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    ItemId INT NOT NULL,
+    QuantityReceived INT NOT NULL,
+    ReceiptId INT NOT NULL,
+    RowVersion TIMESTAMP,
+    CONSTRAINT FK_ReceiptItems_Items FOREIGN KEY (ItemId) REFERENCES Items(Id),
+    CONSTRAINT FK_ReceiptItems_Receipts FOREIGN KEY (ReceiptId) REFERENCES Receipts(Id)
+);
+
+CREATE TABLE ItemLedgers (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    ItemId INT NOT NULL,
+    Quantity INT NOT NULL,
+    Type INT NOT NULL,
+    ReferenceId INT NOT NULL,
+    CreatedDate DATETIME2(7) NOT NULL,
+    RowVersion TIMESTAMP,
+    CONSTRAINT FK_ItemLedgers_Items FOREIGN KEY (ItemId) REFERENCES Items(Id)
+);

@@ -4,6 +4,7 @@ using Inventory.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Inventory.Infrastructure.Migrations
 {
     [DbContext(typeof(InventoryDbContext))]
-    partial class InventoryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240911181252_MakeSupplierIdAsForeignKey")]
+    partial class MakeSupplierIdAsForeignKey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -222,8 +225,6 @@ namespace Inventory.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId");
-
                     b.ToTable("Receipts");
                 });
 
@@ -323,17 +324,6 @@ namespace Inventory.Infrastructure.Migrations
                         .HasForeignKey("OrderId");
 
                     b.Navigation("Item");
-                });
-
-            modelBuilder.Entity("Inventory.Domain.AggregatesModel.ReceiptAggregate.Receipt", b =>
-                {
-                    b.HasOne("Inventory.Domain.AggregatesModel.OrderAggregate.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("Inventory.Domain.AggregatesModel.ReceiptAggregate.ReceiptItem", b =>

@@ -11,7 +11,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inventory.Application", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inventory.Infrastructure", "src\Inventory.Infrastructure\Inventory.Infrastructure.csproj", "{FC0E82D2-483C-4DE7-BD8E-5CF0F2B68799}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory.API", "src\Inventory.API\Inventory.API.csproj", "{0E6483DC-81BC-4389-ADD7-912992A2C054}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inventory.API", "src\Inventory.API\Inventory.API.csproj", "{0E6483DC-81BC-4389-ADD7-912992A2C054}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resources", "resources", "{CB5FC69E-C20E-4B12-893D-4CFD3756751A}"
+	ProjectSection(SolutionItems) = preProject
+		resources\Conceptual Questions Answers.txt = resources\Conceptual Questions Answers.txt
+		DatabaseScripts.txt = DatabaseScripts.txt
+		resources\ER Diagram.png = resources\ER Diagram.png
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
