@@ -1,6 +1,7 @@
 ﻿using Inventory.Domain.AggregatesModel.OrderAggregate;
 using Inventory.Domain.Exceptions;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Inventory.Application.Commands;
 
@@ -29,9 +30,22 @@ public class UpdateOrderStatusHandler : IRequestHandler<UpdateOrderStatusCommand
 
         order.UpdateOrderStatus(request.IsCompleted);
 
-        _orderRepository.Update(order);
+        try
+        {
+            _orderRepository.Update(order);
 
-        await _orderRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
+            await _orderRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
+        }
+        catch (DbUpdateConcurrencyException ex)
+        {
+            foreach (var entry in ex.Entries)
+            {
+                var databaseValues = await entry.GetDatabaseValuesAsync();
+                var clientValues = entry.CurrentValues;
+
+                throw new ConcurrencyConflictException(nameof(Order), order.Id);
+            }
+        }
 
         return true;
     }

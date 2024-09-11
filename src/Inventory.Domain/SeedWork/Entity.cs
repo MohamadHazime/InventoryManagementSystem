@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using System.ComponentModel.DataAnnotations;
 
 namespace Inventory.Domain.SeedWork;
 
@@ -18,6 +19,9 @@ public abstract class Entity
             _Id = value;
         }
     }
+
+    [Timestamp]
+    public byte[] RowVersion { get; set; }
 
     private List<INotification> _domainEvents;
     public IReadOnlyCollection<INotification> DomainEvents => _domainEvents?.AsReadOnly();
