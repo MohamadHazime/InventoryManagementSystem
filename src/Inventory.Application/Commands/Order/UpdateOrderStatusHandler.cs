@@ -31,7 +31,7 @@ public class UpdateOrderStatusHandler : IRequestHandler<UpdateOrderStatusCommand
 
         _orderRepository.Update(order);
 
-        await _orderRepository.UnitOfWork.SaveEntitiesAsync();
+        await _orderRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
 
         return true;
     }

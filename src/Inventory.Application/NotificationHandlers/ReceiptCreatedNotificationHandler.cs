@@ -27,6 +27,6 @@ public class ReceiptCreatedNotificationHandler : INotificationHandler<ReceiptCre
             _itemLedgerRepository.Add(itemLedger);
         }
 
-        await _itemLedgerRepository.UnitOfWork.SaveEntitiesAsync();
+        await _itemLedgerRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
     }
 }

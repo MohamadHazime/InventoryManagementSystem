@@ -24,7 +24,7 @@ public class CreateSupplierHandler : IRequestHandler<CreateSupplierCommand, Supp
 
         Supplier savedSupplier = _supplierRepository.Add(supplier);
 
-        await _supplierRepository.UnitOfWork.SaveEntitiesAsync();
+        await _supplierRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
 
         return savedSupplier.ToDto();
     }

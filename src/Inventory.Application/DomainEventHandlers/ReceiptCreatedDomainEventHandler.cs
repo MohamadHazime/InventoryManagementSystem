@@ -25,6 +25,6 @@ public class ReceiptCreatedDomainEventHandler : INotificationHandler<ReceiptCrea
             _itemsRepository.Update(item);
         }
 
-        await _itemsRepository.UnitOfWork.SaveEntitiesAsync();
+        await _itemsRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
     }
 }

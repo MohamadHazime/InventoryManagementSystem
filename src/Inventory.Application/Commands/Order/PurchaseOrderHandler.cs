@@ -51,7 +51,7 @@ public class PurchaseOrderHandler : IRequestHandler<PurchaseOrderCommand, OrderD
 
         _orderRepository.Add(order);
 
-        await _orderRepository.UnitOfWork.SaveEntitiesAsync();
+        await _orderRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
 
         return order.ToDto();
     }

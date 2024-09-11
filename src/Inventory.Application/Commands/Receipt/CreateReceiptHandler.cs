@@ -74,9 +74,9 @@ public class CreateReceiptHandler : IRequestHandler<CreateReceiptCommand, Receip
 
         Receipt addedReceipt = _receiptRepository.Add(receipt);
 
-        await _mediator.Publish(new ReceiptCreatedNotification(addedReceipt.Id));
+        await _mediator.Publish(new ReceiptCreatedNotification(addedReceipt.Id), cancellationToken);
 
-        await _receiptRepository.UnitOfWork.SaveEntitiesAsync();
+        await _receiptRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
 
         return receipt.ToDto(order);
     }

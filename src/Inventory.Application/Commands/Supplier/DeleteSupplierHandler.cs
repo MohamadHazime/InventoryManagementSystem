@@ -15,7 +15,7 @@ public class DeleteSupplierHandler : IRequestHandler<DeleteSupplierCommand, bool
     public async Task<bool> Handle(DeleteSupplierCommand request, CancellationToken cancellationToken)
     {
         bool result = await _supplierRepository.DeleteAsync(request.Id);
-        await _supplierRepository.UnitOfWork.SaveEntitiesAsync();
+        await _supplierRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
 
         return result;
     }

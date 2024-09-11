@@ -25,7 +25,7 @@ public class UpdateSupplierHandler : IRequestHandler<UpdateSupplierCommand, Supp
 
         _supplierRepository.Update(supplier);
 
-        await _supplierRepository.UnitOfWork.SaveEntitiesAsync();
+        await _supplierRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
 
         return supplier.ToDto();
     }
